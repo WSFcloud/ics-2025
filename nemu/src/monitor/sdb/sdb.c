@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/paddr.h>
 
 static int is_batch_mode = false;
 
@@ -47,6 +48,22 @@ static int cmd_c(char *args) {
     return 0;
 }
 
+static int cmd_si(char *args) {
+    char *arg = strtok(NULL, " ");
+    int i;
+
+    if (arg == NULL) {
+        /* no argument given */
+        cpu_exec(1);
+    } else {
+        int n = atoi(arg);
+        for (i = 0; i < n; i++) {
+            cpu_exec(1);
+        }
+    }
+    return 0;
+}
+
 static int cmd_info(char *args) {
     char *arg = strtok(NULL, " ");
 
@@ -56,6 +73,44 @@ static int cmd_info(char *args) {
     } else if (strcmp(arg, "r") == 0) {
         isa_reg_display();
     }
+    return 0;
+}
+
+static int cmd_x(char *args) {
+    char *argN = strtok(NULL, " ");
+    if (argN == NULL) {
+        printf("No parameter\n");
+    }
+    int N = atoi(argN);
+    if (N <= 0) {
+        printf("Invalid number of elements to display\n");
+    }
+
+    char *argEXPR = strtok(NULL, " ");
+    if (argEXPR == NULL) {
+        printf("Missing expression to evaluate as address\n");
+    } else {
+        char *end_ptr;
+        unsigned long int arg_value;
+        arg_value = strtoul(argEXPR, &end_ptr, 16);
+        if (*end_ptr != '\0') {
+            printf("字符串中包含非法字符: '%s'\n", end_ptr);
+        } else {
+            for (int i = 0; i < N; i++) {
+                printf("%#010lx:\t", arg_value);
+                for (int j = 0; j < 4; j++) {
+                    int read_mem = paddr_read(arg_value, 4);
+                    printf("%#010x  ", read_mem);
+                    arg_value += 4;
+                }
+                printf("\n");
+            }
+        }
+    }
+    return 0;
+}
+
+static int cmd_p(char *args) {
     return 0;
 }
 
@@ -73,7 +128,10 @@ static struct {
 } cmd_table[] = {
     {"help", "Display information about all supported commands", cmd_help},
     {"c", "Continue the execution of the program", cmd_c},
-    {"info", "Print program status", cmd_info},
+    {"si", "si N: Execute the program single-step for N instructions and then pause execution, when N is not provided, the default is 1", cmd_si},
+    {"info", "info r: Print register status", cmd_info},
+    {"x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting memory address, and output N consecutive 4-byte values in hexadecimal form", cmd_x},
+    {"p", "p EXPR: Calculate the value of the expression EXPR", cmd_p},
     {"q", "Exit NEMU", cmd_q},
 
     /* TODO: Add more commands */
