@@ -47,6 +47,18 @@ static int cmd_c(char *args) {
     return 0;
 }
 
+static int cmd_info(char *args) {
+    char *arg = strtok(NULL, " ");
+
+    if (arg == NULL) {
+        /* no argument given */
+        printf("No parameter\n");
+    } else if (strcmp(arg, "r") == 0) {
+        isa_reg_display();
+    }
+    return 0;
+}
+
 static int cmd_q(char *args) {
     nemu_state.state = NEMU_QUIT;
     return -1;
@@ -61,6 +73,7 @@ static struct {
 } cmd_table[] = {
     {"help", "Display information about all supported commands", cmd_help},
     {"c", "Continue the execution of the program", cmd_c},
+    {"info", "Print program status", cmd_info},
     {"q", "Exit NEMU", cmd_q},
 
     /* TODO: Add more commands */
