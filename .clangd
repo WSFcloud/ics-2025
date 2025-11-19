@@ -1,0 +1,14 @@
+Diagnostics:
+  Suppress: ["main_arg_wrong", "no_member"]
+Index:
+  Background: Build
+  StandardLibrary: Yes
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+  Designators: Yes
+Hover:
+  ShowAKA: Yes
+CompileFlags:
+  CompilationDatabase: .vscode/compile_commands.json
