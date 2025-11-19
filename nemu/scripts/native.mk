@@ -50,4 +50,7 @@ clean-all: clean distclean clean-tools
 count:
 	@echo "line counts = $(shell find $(NEMU_HOME)/ -name "*.c" -o -name "*.h" -not -path "$(NEMU_HOME)/tools/*" | xargs grep -v '^\s*$$' | wc -l)"
 
-.PHONY: run gdb run-env clean-tools clean-all $(clean-tools) count
+format: 	
+	@find $(NEMU_HOME) -path "$(NEMU_HOME)/tools" -prune -o \( -name "*.c" -o -name "*.h" \) -print | xargs clang-format -i
+
+.PHONY: run gdb run-env clean-tools clean-all $(clean-tools) count format
