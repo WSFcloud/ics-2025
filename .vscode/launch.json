@@ -1,0 +1,39 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "make run",
+			"type": "cppdbg",
+			"request": "launch",
+			// "miDebuggerServerAddress": "127.0.0.1:1234",
+            "program": "${workspaceFolder}/nemu/build/riscv32-nemu-interpreter",
+			"args": ["--log=${workspaceFolder}/nemu/build/nemu-log.txt"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/nemu",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"miDebuggerArgs": "-q -ex quit; wait() { fg >/dev/null; }; /bin/gdb -q --interpreter=mi",
+			"setupCommands": [
+				{
+					"description": "为 gdb 启用整齐打印",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				},
+				{
+					"description": "将反汇编风格设置为 Intel",
+					"text": "-gdb-set disassembly-flavor intel",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build-all"
+		},
+		{
+			"name": "Python",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal"
+		}
+	]
+}

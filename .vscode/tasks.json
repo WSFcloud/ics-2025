@@ -1,0 +1,48 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "clean",
+            "command": "cd $NEMU_HOME; make clean",
+            "type": "shell"
+        },
+        {
+            "label": "build",
+            "command": "cd $NEMU_HOME; make -j",
+            "args": [],
+            "type": "shell"
+        },
+        {
+            "label": "run",
+            "command": "cd $NEMU_HOME; make run",
+            "type": "shell",
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ],
+            "isBackground": true
+        },
+        {
+            "label": "build-all",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "clean",
+                "build",
+                //"run"
+            ]
+        }
+	]
+}
