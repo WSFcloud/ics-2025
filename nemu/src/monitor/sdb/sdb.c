@@ -72,6 +72,8 @@ static int cmd_info(char *args) {
         printf("No parameter\n");
     } else if (strcmp(arg, "r") == 0) {
         isa_reg_display();
+    } else if (strcmp(arg, "w") == 0) {
+        watch_points_display();
     }
     return 0;
 }
@@ -114,6 +116,31 @@ static int cmd_p(char *args) {
     return 0;
 }
 
+static int cmd_w(char *args) {
+    bool isSuccess = false;
+    word_t result = expr(args, &isSuccess);
+    if (!isSuccess) {
+        printf("Wrong Expression\n");
+    } else {
+        WP *wp = new_wp();
+        strcpy(wp->expr, args);
+        wp->val = result;
+    }
+    return 0;
+}
+
+static int cmd_d(char *args) {
+    char *arg = strtok(NULL, " ");
+
+    if (arg == NULL) {
+        printf("No argument given\n");
+    }
+
+    int free_no = atoi(arg);
+    free_wp(free_no);
+    return 0;
+}
+
 static int cmd_q(char *args) {
     nemu_state.state = NEMU_QUIT;
     return -1;
@@ -129,9 +156,11 @@ static struct {
     {"help", "Display information about all supported commands", cmd_help},
     {"c", "Continue the execution of the program", cmd_c},
     {"si", "si N: Execute the program single-step for N instructions and then pause execution, when N is not provided, the default is 1", cmd_si},
-    {"info", "info r: Print register status", cmd_info},
+    {"info", "info r: Print register status;    info w: Print whatch points status", cmd_info},
     {"x", "x N EXPR: Calculate the value of the expression EXPR, use the result as the starting memory address, and output N consecutive 4-byte values in hexadecimal form", cmd_x},
     {"p", "p EXPR: Calculate the value of the expression EXPR", cmd_p},
+    {"w", "w EXPR: When the value of the expression EXPR changes, the program execution is paused", cmd_w},
+    {"d", "d N: Delete the monitoring point with the sequence number N", cmd_d},
     {"q", "Exit NEMU", cmd_q},
 
     /* TODO: Add more commands */
