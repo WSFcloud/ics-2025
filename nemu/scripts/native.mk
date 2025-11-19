@@ -47,4 +47,7 @@ $(clean-tools):
 clean-tools: $(clean-tools)
 clean-all: clean distclean clean-tools
 
-.PHONY: run gdb run-env clean-tools clean-all $(clean-tools)
+count:
+	@echo "line counts = $(shell find $(NEMU_HOME)/ -name "*.c" -o -name "*.h" -not -path "$(NEMU_HOME)/tools/*" | xargs grep -v '^\s*$$' | wc -l)"
+
+.PHONY: run gdb run-env clean-tools clean-all $(clean-tools) count
