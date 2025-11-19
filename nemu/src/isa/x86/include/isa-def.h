@@ -18,7 +18,6 @@
 
 #include <common.h>
 
-
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
  * access cpu.gpr[3]._16, we will get the `bx' register; if we access
@@ -27,27 +26,48 @@
  */
 
 typedef struct {
-  struct {
-    uint32_t _32;
-    uint16_t _16;
-    uint8_t _8[2];
-  } gpr[8];
+    struct {
+        uint32_t _32;
+        uint16_t _16;
+        uint8_t _8[2];
+    } gpr[8];
 
-  /* Do NOT change the order of the GPRs' definitions. */
-  uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+    /* Do NOT change the order of the GPRs' definitions. */
+    uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 
-  vaddr_t pc;
+    vaddr_t pc;
 } x86_CPU_state;
 
 // decode
 typedef struct {
-  uint8_t inst[16];
-  uint8_t *p_inst;
+    uint8_t inst[16];
+    uint8_t *p_inst;
 } x86_ISADecodeInfo;
 
-enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
-enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
-enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
+enum { R_EAX,
+       R_ECX,
+       R_EDX,
+       R_EBX,
+       R_ESP,
+       R_EBP,
+       R_ESI,
+       R_EDI };
+enum { R_AX,
+       R_CX,
+       R_DX,
+       R_BX,
+       R_SP,
+       R_BP,
+       R_SI,
+       R_DI };
+enum { R_AL,
+       R_CL,
+       R_DL,
+       R_BL,
+       R_AH,
+       R_CH,
+       R_DH,
+       R_BH };
 
 #define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
 #endif

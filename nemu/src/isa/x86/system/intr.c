@@ -17,11 +17,11 @@
 #include <memory/vaddr.h>
 
 word_t isa_raise_intr(word_t NO, vaddr_t ret_addr) {
-  /* TODO: Trigger an interrupt/exception with ``NO''.
+    /* TODO: Trigger an interrupt/exception with ``NO''.
    * That is, use ``NO'' to index the IDT.
    */
 
-  return 0;
+    return 0;
 }
 
 void query_intr() {

@@ -19,13 +19,13 @@
 #include <common.h>
 
 typedef struct {
-  word_t gpr[32];
-  vaddr_t pc;
+    word_t gpr[32];
+    vaddr_t pc;
 } loongarch32r_CPU_state;
 
 // decode
 typedef struct {
-  uint32_t inst;
+    uint32_t inst;
 } loongarch32r_ISADecodeInfo;
 
 #define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)

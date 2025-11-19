@@ -25,7 +25,7 @@
 #define LINUX_MMC_MMC_H
 
 /* Standard MMC commands (4.1)           type  argument     response */
-   /* class 1 */
+/* class 1 */
 #define MMC_GO_IDLE_STATE         0   /* bc                          */
 #define MMC_SEND_OP_COND          1   /* bcr  [31:0] OCR         R3  */
 #define MMC_ALL_SEND_CID          2   /* bcr                     R2  */
@@ -46,45 +46,45 @@
 #define MMC_SPI_READ_OCR         58   /* spi                  spi_R3 */
 #define MMC_SPI_CRC_ON_OFF       59   /* spi  [0:0] flag      spi_R1 */
 
-  /* class 2 */
+/* class 2 */
 #define MMC_SET_BLOCKLEN         16   /* ac   [31:0] block len   R1  */
 #define MMC_READ_SINGLE_BLOCK    17   /* adtc [31:0] data addr   R1  */
 #define MMC_READ_MULTIPLE_BLOCK  18   /* adtc [31:0] data addr   R1  */
 #define MMC_SEND_TUNING_BLOCK    19   /* adtc                    R1  */
 #define MMC_SEND_TUNING_BLOCK_HS200	21	/* adtc R1  */
 
-  /* class 3 */
+/* class 3 */
 #define MMC_WRITE_DAT_UNTIL_STOP 20   /* adtc [31:0] data addr   R1  */
 
-  /* class 4 */
+/* class 4 */
 #define MMC_SET_BLOCK_COUNT      23   /* adtc [31:0] data addr   R1  */
 #define MMC_WRITE_BLOCK          24   /* adtc [31:0] data addr   R1  */
 #define MMC_WRITE_MULTIPLE_BLOCK 25   /* adtc                    R1  */
 #define MMC_PROGRAM_CID          26   /* adtc                    R1  */
 #define MMC_PROGRAM_CSD          27   /* adtc                    R1  */
 
-  /* class 6 */
+/* class 6 */
 #define MMC_SET_WRITE_PROT       28   /* ac   [31:0] data addr   R1b */
 #define MMC_CLR_WRITE_PROT       29   /* ac   [31:0] data addr   R1b */
 #define MMC_SEND_WRITE_PROT      30   /* adtc [31:0] wpdata addr R1  */
 
-  /* class 5 */
+/* class 5 */
 #define MMC_ERASE_GROUP_START    35   /* ac   [31:0] data addr   R1  */
 #define MMC_ERASE_GROUP_END      36   /* ac   [31:0] data addr   R1  */
 #define MMC_ERASE                38   /* ac                      R1b */
 
-  /* class 9 */
+/* class 9 */
 #define MMC_FAST_IO              39   /* ac   <Complex>          R4  */
 #define MMC_GO_IRQ_STATE         40   /* bcr                     R5  */
 
-  /* class 7 */
+/* class 7 */
 #define MMC_LOCK_UNLOCK          42   /* adtc                    R1b */
 
-  /* class 8 */
+/* class 8 */
 #define MMC_APP_CMD              55   /* ac   [31:16] RCA        R1  */
 #define MMC_GEN_CMD              56   /* adtc [0] RD/WR          R1  */
 
-  /* class 11 */
+/* class 11 */
 #define MMC_QUE_TASK_PARAMS      44   /* ac   [20:16] task id    R1  */
 #define MMC_QUE_TASK_ADDR        45   /* ac   [31:0] data addr   R1  */
 #define MMC_EXECUTE_READ_TASK    46   /* adtc [20:16] task id    R1  */
@@ -191,30 +191,30 @@
  * Card Command Classes (CCC)
  */
 #define CCC_BASIC		(1<<0)	/* (0) Basic protocol functions */
-					/* (CMD0,1,2,3,4,7,9,10,12,13,15) */
-					/* (and for SPI, CMD58,59) */
+/* (CMD0,1,2,3,4,7,9,10,12,13,15) */
+/* (and for SPI, CMD58,59) */
 #define CCC_STREAM_READ		(1<<1)	/* (1) Stream read commands */
-					/* (CMD11) */
+/* (CMD11) */
 #define CCC_BLOCK_READ		(1<<2)	/* (2) Block read commands */
-					/* (CMD16,17,18) */
+/* (CMD16,17,18) */
 #define CCC_STREAM_WRITE	(1<<3)	/* (3) Stream write commands */
-					/* (CMD20) */
+/* (CMD20) */
 #define CCC_BLOCK_WRITE		(1<<4)	/* (4) Block write commands */
-					/* (CMD16,24,25,26,27) */
+/* (CMD16,24,25,26,27) */
 #define CCC_ERASE		(1<<5)	/* (5) Ability to erase blocks */
-					/* (CMD32,33,34,35,36,37,38,39) */
+/* (CMD32,33,34,35,36,37,38,39) */
 #define CCC_WRITE_PROT		(1<<6)	/* (6) Able to write protect blocks */
-					/* (CMD28,29,30) */
+/* (CMD28,29,30) */
 #define CCC_LOCK_CARD		(1<<7)	/* (7) Able to lock down card */
-					/* (CMD16,CMD42) */
+/* (CMD16,CMD42) */
 #define CCC_APP_SPEC		(1<<8)	/* (8) Application specific */
-					/* (CMD55,56,57,ACMD*) */
+/* (CMD55,56,57,ACMD*) */
 #define CCC_IO_MODE		(1<<9)	/* (9) I/O mode */
-					/* (CMD5,39,40,52,53) */
+/* (CMD5,39,40,52,53) */
 #define CCC_SWITCH		(1<<10)	/* (10) High speed switch */
-					/* (CMD6,34,35,36,37,50) */
-					/* (11) Reserved */
-					/* (CMD?) */
+/* (CMD6,34,35,36,37,50) */
+/* (11) Reserved */
+/* (CMD?) */
 
 /*
  * CSD field definitions
@@ -336,14 +336,14 @@
 #define EXT_CSD_CARD_TYPE_HS	(EXT_CSD_CARD_TYPE_HS_26 | \
 				 EXT_CSD_CARD_TYPE_HS_52)
 #define EXT_CSD_CARD_TYPE_DDR_1_8V  (1<<2)   /* Card can run at 52MHz */
-					     /* DDR mode @1.8V or 3V I/O */
+/* DDR mode @1.8V or 3V I/O */
 #define EXT_CSD_CARD_TYPE_DDR_1_2V  (1<<3)   /* Card can run at 52MHz */
-					     /* DDR mode @1.2V I/O */
+/* DDR mode @1.2V I/O */
 #define EXT_CSD_CARD_TYPE_DDR_52       (EXT_CSD_CARD_TYPE_DDR_1_8V  \
 					| EXT_CSD_CARD_TYPE_DDR_1_2V)
 #define EXT_CSD_CARD_TYPE_HS200_1_8V	(1<<4)	/* Card can run at 200MHz */
 #define EXT_CSD_CARD_TYPE_HS200_1_2V	(1<<5)	/* Card can run at 200MHz */
-						/* SDR mode @1.2V I/O */
+/* SDR mode @1.2V I/O */
 #define EXT_CSD_CARD_TYPE_HS200		(EXT_CSD_CARD_TYPE_HS200_1_8V | \
 					 EXT_CSD_CARD_TYPE_HS200_1_2V)
 #define EXT_CSD_CARD_TYPE_HS400_1_8V	(1<<6)	/* Card can run at 200MHz DDR, 1.8V */
