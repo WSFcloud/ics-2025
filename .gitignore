@@ -11,3 +11,8 @@
 !init.sh
 /fceux-am
 /am-kernels
+!.vscode/*
+.vscode/compile_commands.json
+.vscode/.cache/
+!.clang-format
+!.clangd
