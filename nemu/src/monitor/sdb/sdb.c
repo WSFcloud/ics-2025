@@ -96,7 +96,7 @@ static int cmd_x(char *args) {
         unsigned long int arg_value;
         arg_value = strtoul(argEXPR, &end_ptr, 16);
         if (*end_ptr != '\0') {
-            printf("字符串中包含非法字符: '%s'\n", end_ptr);
+            printf("contain illegal char: '%s'\n", end_ptr);
         } else {
             for (int i = 0; i < N; i++) {
                 printf("%#010lx:\t", arg_value);
@@ -113,6 +113,13 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_p(char *args) {
+    bool success = false;
+    word_t result = expr(args, &success);
+    if (!success) {
+        printf("Wrong Expression\n");
+    } else {
+        printf("%u\n", result);
+    }
     return 0;
 }
 
