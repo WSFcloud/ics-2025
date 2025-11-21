@@ -24,7 +24,7 @@ const char *regs[] = {
 
 void isa_reg_display() {
     for (int i = 0; i < ARRLEN(regs); i++) {
-        printf("%s: %d\t", regs[i], gpr(i));
+        printf("%-3s: %-10u\t", regs[i], gpr(i));
         if ((i + 1) % 4 == 0) {
             printf("\n");
         }
